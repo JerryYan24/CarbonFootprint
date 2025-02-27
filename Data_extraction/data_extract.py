@@ -12,7 +12,7 @@ def data_extracting(x):
        
         
         data=pd.read_csv(x) #reading the required csv file for extraction of data
-       
+        data = encode_extracted_data(data) 
 
         # ENCODING FREQUENCY COLUMN
         # value_Frequency_of_Traveling_by_Air= data['Frequency of Traveling by Air'].unique().tolist()  
@@ -20,17 +20,6 @@ def data_extracting(x):
         dict_of_encoding={'never':0, 'rarely': 1,'frequently': 2,'very frequently': 3} #brute force but in order
         data['Frequency of Traveling by Air'].replace(dict_of_encoding, inplace=True) # ordinally encoding the column
         
-
-
-
-        # ENCODING TRANSPORT COLUMN
-        value_transport= data['Transport'].unique().tolist() #values in column
-        columns_to_select+=value_transport #adding column names to selection list
-        for i in value_transport:
-                data[i] = data['Transport'].apply(lambda x: 1 if x == i else 0) #hot-encoding
-            
-        columns_to_select.remove('Transport') #removing transport column name from the required selectionn list
-
 
 
 
@@ -49,5 +38,30 @@ def data_extracting(x):
 
 #function call to do the changes 
 data_extracting("Data_extraction/CarbonEmission.csv")
+
+#---------------------------------------------------------------------------------------
+
+# Function to further encode the columns:
+def encode_extracted_data(df):
+    """
+    This function takes an input CSV file, performs one-hot encoding on the 
+    'Heating Energy Source' and 'Vehicle Type' columns, and returns the path to the 
+    newly saved encoded CSV file.
+    
+    Parameters:
+    input_csv (str): Path to the input CSV file.
+    
+    Returns:
+    str: Path to the output encoded CSV file.
+    """
+    import pandas as pd
+    
+    # Load the CSV file
+    #df = pd.read_csv(input_csv)
+
+    # Perform one-hot encoding on the specified columns
+    df_encoded = pd.get_dummies(df, columns=["Heating Energy Source", "Vehicle Type","Transport"], prefix='', prefix_sep='')
+
+    return df_encoded
 
 
