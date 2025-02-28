@@ -1,7 +1,33 @@
 import pandas as pd
+import numpy as np
 import os
 
-#add wastebags and number of wastebags
+import pandas as pd
+
+import pandas as pd
+
+import pandas as pd
+
+def list_to_columns(data1, column_name):
+    # Make a copy of the DataFrame to avoid modifying the original DataFrame directly
+    data1 = data1.copy()
+
+    # Convert string representation of lists into actual lists (safely)
+    data1[column_name] = data1[column_name].apply(lambda s: eval(s) if isinstance(s, str) and s != '[]' else [])
+
+    # Create a set of unique items from all lists in the column
+    unique_items = set(item for sublist in data1[column_name] for item in sublist)
+
+    # Create a new column for each unique item, initializing with 0
+    for item in unique_items:
+        data1[item] = data1[column_name].apply(lambda x: 1 if item in x else 0)
+
+    return data1
+
+
+
+# list_to_columns("Data_extraction/CarbonEmission.csv","Cooking_With")
+
 
 # Function to further encode the columns:
 def encode_extracted_data(df):
@@ -22,7 +48,7 @@ def encode_extracted_data(df):
     #df = pd.read_csv(input_csv)
 
     # Perform one-hot encoding on the specified columns
-    df_encoded = pd.get_dummies(df, columns=["Heating Energy Source", "Vehicle Type","Transport","Cooking_With", "Waste Bag Size","Waste Bag Weekly Count" ], prefix='', prefix_sep='').astype(int)
+    df_encoded = pd.get_dummies(df, columns=["Heating Energy Source", "Vehicle Type","Transport", "Waste Bag Size","Waste Bag Weekly Count" ], prefix='', prefix_sep='').astype(int)
 
     return df_encoded
 
@@ -42,25 +68,20 @@ def data_extracting(x):
         
         data=pd.read_csv(x) #reading the required csv file for extraction of data
        
-        # print( pd.unique(data[["Heating Energy Source", "Vehicle Type", "Transport"]].values.ravel()))
         
 
         # ENCODING FREQUENCY COLUMN
         # value_Frequency_of_Traveling_by_Air= data['Frequency of Traveling by Air'].unique().tolist()  
-       # dict_of_encoding = {key: value_s.index(key) for key in value_s} #this has less brute-force but it is not in any particular order
+        # dict_of_encoding = {key: value_s.index(key) for key in value_s} #this has less brute-force but it is not in any particular order
         dict_of_encoding={'never':0, 'rarely': 1,'frequently': 2,'very frequently': 3} #brute force but in order
         data['Frequency of Traveling by Air'].replace(dict_of_encoding, inplace=True) # ordinally encoding the column
-       
-       
        
 
         #ONE-HOT-ENCODING
         new_df=data[columns_to_select]
-        final_df= encode_extracted_data(new_df)
+        separated_df=list_to_columns(new_df, 'Cooking_With')
+        final_df= encode_extracted_data(separated_df)
         
-        
-        
-
 
         # SAVING DATA
         file_path = os.path.join(cwd, "Data_extraction/extracted_data.csv")
@@ -74,3 +95,4 @@ def data_extracting(x):
 
 #function call to do the changes 
 data_extracting("Data_extraction/CarbonEmission.csv")
+
