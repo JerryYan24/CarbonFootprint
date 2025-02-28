@@ -1,6 +1,8 @@
 import pandas as pd
 import os
 
+#add wastebags and number of wastebags
+
 # Function to further encode the columns:
 def encode_extracted_data(df):
     """
@@ -20,7 +22,7 @@ def encode_extracted_data(df):
     #df = pd.read_csv(input_csv)
 
     # Perform one-hot encoding on the specified columns
-    df_encoded = pd.get_dummies(df, columns=["Heating Energy Source", "Vehicle Type","Transport"], prefix='', prefix_sep='').astype(int)
+    df_encoded = pd.get_dummies(df, columns=["Heating Energy Source", "Vehicle Type","Transport","Cooking_With", "Waste Bag Size","Waste Bag Weekly Count" ], prefix='', prefix_sep='').astype(int)
 
     return df_encoded
 
@@ -33,7 +35,8 @@ def data_extracting(x):
         :input: x : filename=str
         '''
         cwd = os.getcwd()
-        columns_to_select=['Frequency of Traveling by Air', 'Vehicle Monthly Distance Km' ,'CarbonEmission']
+
+        columns_to_select=['Frequency of Traveling by Air', "Heating Energy Source", "Vehicle Type","Transport", 'Vehicle Monthly Distance Km',"Cooking_With", "Waste Bag Size","Waste Bag Weekly Count" , 'CarbonEmission']
 
        
         
@@ -41,9 +44,6 @@ def data_extracting(x):
        
         # print( pd.unique(data[["Heating Energy Source", "Vehicle Type", "Transport"]].values.ravel()))
         
-
-        one_hot_columns= data.columns.tolist()
-        columns_to_select+=one_hot_columns
 
         # ENCODING FREQUENCY COLUMN
         # value_Frequency_of_Traveling_by_Air= data['Frequency of Traveling by Air'].unique().tolist()  
@@ -55,8 +55,9 @@ def data_extracting(x):
        
 
         #ONE-HOT-ENCODING
-        new_df=data[['Frequency of Traveling by Air', "Heating Energy Source", "Vehicle Type","Transport", 'Vehicle Monthly Distance Km' ,'CarbonEmission']]
+        new_df=data[columns_to_select]
         final_df= encode_extracted_data(new_df)
+        
         
         
 
