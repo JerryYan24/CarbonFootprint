@@ -1,12 +1,7 @@
 import pandas as pd
-import numpy as np
 import os
 
-import pandas as pd
 
-import pandas as pd
-
-import pandas as pd
 
 def list_to_columns(data1, column_name):
     # Make a copy of the DataFrame to avoid modifying the original DataFrame directly
@@ -21,7 +16,8 @@ def list_to_columns(data1, column_name):
     # Create a new column for each unique item, initializing with 0
     for item in unique_items:
         data1[item] = data1[column_name].apply(lambda x: 1 if item in x else 0)
-
+    
+    data1.drop(columns=[column_name], inplace=True)
     return data1
 
 
@@ -42,14 +38,9 @@ def encode_extracted_data(df):
     Returns:
     str: Path to the output encoded CSV file.
     """
-    import pandas as pd
-    
-    # Load the CSV file
-    #df = pd.read_csv(input_csv)
-
     # Perform one-hot encoding on the specified columns
-    df_encoded = pd.get_dummies(df, columns=["Heating Energy Source", "Vehicle Type","Transport", "Waste Bag Size","Waste Bag Weekly Count" ], prefix='', prefix_sep='').astype(int)
-
+    df_encoded = pd.get_dummies(df, columns=["Heating Energy Source", "Vehicle Type","Transport", "Waste Bag Size" ], prefix='', prefix_sep='')
+    df_encoded.replace({True: 1, False: 0}, inplace=True)
     return df_encoded
 
 
@@ -62,7 +53,7 @@ def data_extracting(x):
         '''
         cwd = os.getcwd()
 
-        columns_to_select=['Frequency of Traveling by Air', "Heating Energy Source", "Vehicle Type","Transport", 'Vehicle Monthly Distance Km',"Cooking_With", "Waste Bag Size","Waste Bag Weekly Count" , 'CarbonEmission']
+        columns_to_select=['Frequency of Traveling by Air', "Heating Energy Source", "Vehicle Type","Transport", 'Vehicle Monthly Distance Km', "Cooking_With","Waste Bag Size","Waste Bag Weekly Count" , 'CarbonEmission']
 
        
         
@@ -82,16 +73,13 @@ def data_extracting(x):
         separated_df=list_to_columns(new_df, 'Cooking_With')
         final_df= encode_extracted_data(separated_df)
         
+        
 
         # SAVING DATA
         file_path = os.path.join(cwd, "Data_extraction/extracted_data.csv")
         final_df.to_csv(file_path, index=False)
 
 
-        #uncomment to print the extracted data
-        # a=pd.read_csv("extracted_data.csv")
-        # print(a)
-        
 
 #function call to do the changes 
 data_extracting("Data_extraction/CarbonEmission.csv")
