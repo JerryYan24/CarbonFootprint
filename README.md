@@ -16,6 +16,7 @@ CarbonFootprint/
 
 **./Notebooks/**  
 Collection of Jupyter Notebooks for the clustering, linear regression, and recommendation algorithms.
+Includes visualizations for data analysis and model performance.
 
 **./Recommendation/**  
 [Description]
