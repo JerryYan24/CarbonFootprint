@@ -25,7 +25,7 @@ Includes visualizations for data analysis and model performance.
 
 **Data extraction**  
 - Takes the entire dataset and truncate it based on user selection and perform necessary encoding for non-numerical data columns within the truncated dataset to output a .csv file for analysis.
-<code>./Data_extraction
+<code>./Data_extraction/Data_extraction_v1.py
 
 **Data analysis**  
 
