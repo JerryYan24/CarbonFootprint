@@ -33,7 +33,7 @@ Includes the before and post recommendation Carbon Emissions visualization relat
 **Data analysis**  
 
 - Clustering  
-[Description]
+Doing clustering on the dataset to find the optimal number of clusters and the cluster centers by running the <code>./Notebooks/clustering_pca.ipynb</code> file.
 
 - Linear regression  
 Generate parameters for the recommendation model by running the <code>./Notebooks/linear_regression.ipynb</code> file.
