@@ -19,7 +19,10 @@ Collection of Jupyter Notebooks for the clustering, linear regression, and recom
 Includes visualizations for data analysis and model performance.
 
 **./Recommendation/**  
-[Description]
+Provides a user with actionable recommendations that would reduce their carbon emissions by a predetermined % - Utilizes the extracted parmeters from the linear regression run. 
+Adopts a Targeted Top Contributor approach - Instead of tweaking all of the chosen 5 analysis features, it targets the top 2 carbon emission contributing features for the user.
+Includes the before and post recommendation Carbon Emissions visualization relative to the mean and median of the entire dataset.
+
 
 # How to Run
 
@@ -36,7 +39,9 @@ Includes visualizations for data analysis and model performance.
 Generate parameters for the recommendation model by running the <code>./Notebooks/linear_regression.ipynb</code> file.
 
 **Recommendation**  
-[Description]
+- Suggest the new individual choices for the chosen user by applying practical constraints to the Recommendation model whilst maintaining logical consistency.
+- Visualize the impact of the recommendations on the individual's Carbon Emissions relative to the mean/median of the dataset.
+- Run : <code>./Notebooks/Before_After_Standing.ipynb</code> file 
 
 # Modules
 - os
