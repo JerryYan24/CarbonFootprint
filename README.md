@@ -50,3 +50,7 @@ Generate parameters for the recommendation model by running the <code>./Notebook
 - sklearn
 - matplotlib.pyplot
 - seaborn
+
+# Note 
+We have just accumulated our visualizations in the merged.pynb file and have not sanitized the flow of different modules(Data Extraction, Analysis, Recommendations) which have been merged in it.
+These modules have been sanitized and flow flushed discretely and the run commands are mentioned above.
