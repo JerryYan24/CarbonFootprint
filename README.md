@@ -12,7 +12,7 @@ CarbonFootprint/
 ```
 
 **./Data_extraction/**  
-[Description]
+This part of codebase focuses on the data extraction form the a main dataset and transforms the selected data into binary/numerical values for further analysis. 
 
 **./Notebooks/**  
 Collection of Jupyter Notebooks for the clustering, linear regression, and recommendation algorithms.
