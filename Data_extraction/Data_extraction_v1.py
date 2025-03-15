@@ -5,8 +5,10 @@ def truncate_df(df: pd.DataFrame, columns:list):
     '''
     This function extracts the specified colums from given df
     '''
+    assert isinstance(df, pd.DataFrame), "Input df must be a pandas DataFrame"
+    assert isinstance(columns, list), "columns must be a list"
     valid_columns = []
-
+    
     for col in columns:
         if col in df.columns:
             valid_columns.append(col)
@@ -29,6 +31,7 @@ def encode_extracted_data(df: pd.DataFrame) -> pd.DataFrame:
     Returns:
     pd.DataFrame: The one-hot encoded dataframe with the original column structure preserved.
     """  
+    assert isinstance(df, pd.DataFrame), "Input df must be a pandas DataFrame"
     # Columns to be one-hot encoded
     columns_to_encode = ["Heating Energy Source", "Vehicle Type", "Transport", "Waste Bag Size"]
     
@@ -70,6 +73,7 @@ def map_travel_frequency(df: pd.DataFrame) -> pd.DataFrame:
     Returns:
     pd.DataFrame: The dataframe with the mapped 'Frequency of Traveling by Air' column.
     """
+    assert isinstance(df, pd.DataFrame), "Input df must be a pandas DataFrame"
     mapping = {
         "never": 0,
         "rarely": 1,
@@ -92,6 +96,8 @@ def process_and_save(csv_file: str):
     extracted_columns (list): List of columns to extract from the dataframe.
     output_filename (str): Name of the output CSV file to be saved.
     """
+    assert isinstance(csv_file, str), "csv_file must be a string"
+    assert os.path.exists(csv_file), f"File {csv_file} does not exist"
     cwd = os.getcwd()
     
     # Read the dataset
